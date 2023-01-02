@@ -1,3 +1,4 @@
+import 'package:contact_app/Page/add.dart';
 import 'package:contact_app/utils/color_file.dart';
 import 'package:contact_app/utils/image_file.dart';
 import 'package:contact_app/utils/text_file.dart';
@@ -51,7 +52,10 @@ class HomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (Context) => const MyAdd()));
+        },
         child: const Icon(Icons.add),
       ),
     );

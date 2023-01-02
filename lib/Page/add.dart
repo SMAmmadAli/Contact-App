@@ -1,8 +1,33 @@
+import 'package:contact_app/Page/listview.dart';
 import 'package:contact_app/utils/color_file.dart';
+import 'package:contact_app/utils/text_file.dart';
 import 'package:flutter/material.dart';
 
-class MyAdd extends StatelessWidget {
+import '../Model/listClass.dart';
+import '../utils/image_file.dart';
+
+class MyAdd extends StatefulWidget {
   const MyAdd({super.key});
+
+  @override
+  State<MyAdd> createState() => _MyAddState();
+}
+
+class _MyAddState extends State<MyAdd> {
+  TextEditingController name = TextEditingController();
+  TextEditingController surname = TextEditingController();
+  TextEditingController Phone = TextEditingController();
+
+  addNewContact(context) {
+    setState(() {
+      Contact.add({
+        "Name": name.text,
+        "Surname": surname.text,
+        "Phone": Phone.text,
+      });
+      print(Contact);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +49,11 @@ class MyAdd extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                addNewContact(context);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => MyListView()));
+              },
               icon: Icon(
                 Icons.check,
                 color: MyColor.lightBlack,
@@ -33,19 +62,90 @@ class MyAdd extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Container(
-          color: Colors.grey,
-          child: TextField(
-            decoration: InputDecoration(
-                label: const Text('Name'),
-                hintText: 'Enter name',
-                enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(width: 1, color: MyColor.lightBlack))),
-          ),
-        ),
-      ),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                MyTexts.text1,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: MyColor.black,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                color: MyColor.lightWhite,
+                child: TextField(
+                  controller: name,
+                  decoration: InputDecoration(
+                      fillColor: MyColor.lightWhite,
+                      hintText: MyTexts.hinttext1,
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: MyColor.lightgrey))),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                MyTexts.text2,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: MyColor.black,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                color: MyColor.lightWhite,
+                child: TextField(
+                  controller: surname,
+                  decoration: InputDecoration(
+                      fillColor: MyColor.lightWhite,
+                      hintText: MyTexts.hinttext2,
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: MyColor.lightgrey))),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                MyTexts.text3,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: MyColor.black,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                color: MyColor.lightWhite,
+                child: TextField(
+                  controller: Phone,
+                  decoration: InputDecoration(
+                      fillColor: MyColor.lightWhite,
+                      hintText: MyTexts.hinttext3,
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: MyColor.lightgrey))),
+                ),
+              ),
+            ],
+          )),
     );
   }
 }
