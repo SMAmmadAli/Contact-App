@@ -1,8 +1,8 @@
 import 'package:contact_app/Model/listClass.dart';
-import 'package:contact_app/utils/image_file.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/color_file.dart';
+import '../utils/text_file.dart';
 import 'add.dart';
 
 class MyListView extends StatefulWidget {
@@ -13,22 +13,16 @@ class MyListView extends StatefulWidget {
 }
 
 class _MyListViewState extends State<MyListView> {
+  TextEditingController Name = TextEditingController();
+  TextEditingController Surname = TextEditingController();
+  TextEditingController Phone = TextEditingController();
+
   editContact(context, index) {
     setState(() {
       Contact[index] = {
-        "name": Contact[index]['Name'].text,
-        "userName": Contact[index]['Surname'].text,
-        "number": Contact[index]['Phone'].text,
-      };
-    });
-  }
-
-  deleteContact(context, index) {
-    setState(() {
-      Contact[index] = {
-        "name": Contact[index]['Name'].text == '',
-        "userName": Contact[index]['Surname'].text == '',
-        "number": Contact[index]['Phone'].text == '',
+        "name": Contact[index]['Name'] == Name.text,
+        "userName": Contact[index]['Surname'] == Surname.text,
+        "number": Contact[index]['Phone'] == Phone.text,
       };
     });
   }
@@ -78,12 +72,116 @@ class _MyListViewState extends State<MyListView> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        editContact(context, index);
+                        showDialog(
+                            context: context,
+                            builder: ((context) => AlertDialog(
+                                  title: const Text('Edit Contact'),
+                                  content: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        MyTexts.text1,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16,
+                                          color: MyColor.black,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Container(
+                                        color: MyColor.lightWhite,
+                                        child: TextField(
+                                          controller: Name,
+                                          decoration: InputDecoration(
+                                              fillColor: MyColor.lightWhite,
+                                              hintText: MyTexts.hinttext1,
+                                              border: InputBorder.none,
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      width: 1,
+                                                      color:
+                                                          MyColor.lightgrey))),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        MyTexts.text2,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16,
+                                          color: MyColor.black,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Container(
+                                        color: MyColor.lightWhite,
+                                        child: TextField(
+                                          controller: Surname,
+                                          decoration: InputDecoration(
+                                              fillColor: MyColor.lightWhite,
+                                              hintText: MyTexts.hinttext2,
+                                              border: InputBorder.none,
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      width: 1,
+                                                      color:
+                                                          MyColor.lightgrey))),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        MyTexts.text3,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16,
+                                          color: MyColor.black,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Container(
+                                        color: MyColor.lightWhite,
+                                        child: TextField(
+                                          controller: Phone,
+                                          decoration: InputDecoration(
+                                              fillColor: MyColor.lightWhite,
+                                              hintText: MyTexts.hinttext3,
+                                              border: InputBorder.none,
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      width: 1,
+                                                      color:
+                                                          MyColor.lightgrey))),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text("OK"),
+                                      onPressed: () {
+                                        editContact(context, index);
+                                      },
+                                    )
+                                  ],
+                                )));
                       },
                       icon: const Icon(Icons.edit)),
                   IconButton(
                       onPressed: () {
-                        deleteContact(context, index);
+                        setState(() {
+                          Contact.removeAt(index);
+                        });
                       },
                       icon: const Icon(Icons.delete))
                 ],
